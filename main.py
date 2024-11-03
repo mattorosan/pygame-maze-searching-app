@@ -119,6 +119,11 @@ class MainGui:
 
 		self._game.update(time_delta)
 		pygame.display.flip()
+
+		while self._pending_tasks:
+			task = self._pending_tasks.pop()
+			task()
+
 		return None
 
 	def process_event(self, event: pygame.event.Event) -> bool:
@@ -128,10 +133,6 @@ class MainGui:
 		:param event: Gui event
 		:return: Whether gui event is consumed
 		"""
-		while self._pending_tasks:
-			task = self._pending_tasks.pop()
-			task()
-
 		for dropdown in self._dropdowns:
 			if dropdown.process_event(event):
 				if dropdown.is_active:
@@ -220,7 +221,7 @@ class MainGui:
 if __name__ == '__main__':
 	pygame.init()
 
-	gui = MainGui(input_file="input/input_1.txt")
+	gui = MainGui(input_file="input/input_5.txt")
 	gui.main_loop()
 
 	pygame.quit()
