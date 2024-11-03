@@ -1,0 +1,3 @@
+A Star Search
+Steps: 16, Weight: ?, Node: 6912, Time (ms): 761.1532211303711, Memory (MB): 1.287216
+uLulDrrRRRRRRurD
