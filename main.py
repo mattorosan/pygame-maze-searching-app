@@ -123,7 +123,6 @@ class MainGui:
 		while self._pending_tasks:
 			task = self._pending_tasks.pop()
 			task()
-
 		return None
 
 	def process_event(self, event: pygame.event.Event) -> bool:
@@ -186,9 +185,7 @@ class MainGui:
 					case _:
 						pass
 				return True
-
-		self._game.process_event(event)
-		return True
+		return False
 
 	def draw(self, surface: pygame.Surface) -> None:
 		"""

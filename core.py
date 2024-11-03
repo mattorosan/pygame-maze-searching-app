@@ -192,7 +192,7 @@ class Game:
 				result = self._maze.uniform_cost_search()
 			case _:
 				result = self._maze.a_star_search()
-		return result
+		return result and self._maze.write_output("output/output.txt", algorithm)
 
 	def update(self, time_delta: float) -> None:
 		if not self._is_animating:
@@ -235,9 +235,6 @@ class Game:
 			stone_x, stone_y = self._stones_images_positions[stone_position]
 			self._stones_images_positions[stone_position] = (stone_x + horizontal * distance, stone_y + vertical * distance)
 		return None
-
-	def process_event(self, event: pygame.event.Event) -> bool:
-		return True
 
 	def draw(self, surface: pygame.Surface) -> None:
 		"""

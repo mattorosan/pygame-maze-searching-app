@@ -7,8 +7,6 @@ WINDOW_SIZE = (1200, 650)
 GAME_POSITION = (50, 50)
 GAME_SIZE = (800, 550)
 
-DEFAULT_OUTPUT_FILE = "output/output.txt"
-
 BUTTON_THEME = {
 	"idle_bg": "#30312F", "hovered_bg": "#454442", "pressed_bg": "#41403E",
 	"idle_fg": "#adadad", "hovered_fg": "#fefefe", "disabled_fg": "#6a6a6a",

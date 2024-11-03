@@ -181,32 +181,16 @@ class Maze:
 		self._calculate_blank_tiles(maze_strings_list)
 		return True
 
-	def search_and_write_output(self, filename: str, algorithm: Algorithm) -> bool:
+	def write_output(self, filename: str, algorithm: Algorithm) -> bool:
 		"""
-		Execute the given search algorithm and write the output of the current state
+		Write the current state to the output file
 
+		:param algorithm: The algorithm used for searching
 		:param filename: Output file name (absolute path)
-		:param algorithm: Search algorithm to execute
-		:return: Whether the search and write was successful
+		:return: Whether the write process was successful
 		"""
 		if not os.path.exists(filename):
 			print(f"Output file \"{filename}\" not found!")
-			return False
-
-		match algorithm:
-			case Algorithm.DFS:
-				has_path = self.depth_first_search()
-			case Algorithm.BFS:
-				has_path = self.breadth_first_search()
-			case Algorithm.UFC:
-				has_path = self.uniform_cost_search()
-			case Algorithm.A_STAR:
-				has_path = self.a_star_search()
-			case _:
-				return False
-
-		if not has_path:
-			print(f"Algorithm \"{algorithm.value}\" found no answer!")
 			return False
 
 		with open(filename, "w") as file:
