@@ -218,7 +218,7 @@ class MainGui:
 if __name__ == '__main__':
 	pygame.init()
 
-	gui = MainGui(input_file="input/input_5.txt")
+	gui = MainGui(input_file="input/input_3.txt")
 	gui.main_loop()
 
 	pygame.quit()

@@ -5,9 +5,9 @@ from algorithms import Tuple2Int, Tile, Movement, Algorithm, Maze
 
 
 class AnimationSpeed(Enum):
-	SLOW = 1.2
-	MEDIUM = 0.8
-	FAST = 0.4
+	SLOW = 0.8
+	MEDIUM = 0.5
+	FAST = 0.2
 
 
 class Game:
