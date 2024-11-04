@@ -19,7 +19,7 @@ BUTTON_THEME = {
 	"idle_fg": "#adadad", "hovered_fg": "#fefefe", "disabled_fg": "#6a6a6a",
 	"txt_font": "consolas", "txt_size": 22, "txt_bold": True, "txt_align": (elements.CENTER_ALIGN, elements.CENTER_ALIGN),"""
 BUTTON_THEME_2 = {
-	"img_scale": (160, 80), "img_align": (elements.CENTER_ALIGN, elements.CENTER_ALIGN),
+	"img_scale": (120, 60), "img_align": (elements.CENTER_ALIGN, elements.CENTER_ALIGN),
 }
 
 ANIMATION_SPEED_OPTIONS = [

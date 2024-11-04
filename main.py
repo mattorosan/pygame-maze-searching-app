@@ -4,6 +4,7 @@ import elements
 from core import AnimationSpeed, Algorithm, Game
 from elements.button import PushButton
 from elements.dropdown import Dropdown
+from elements.switch import Switch
 from constants import FPS, WINDOW_SIZE, GAME_POSITION, GAME_SIZE, BUTTON_THEME, BUTTON_THEME_2, ANIMATION_SPEED_OPTIONS, ALGORITHM_OPTIONS, \
 	DROPDOWN_THEME
 
@@ -19,6 +20,8 @@ class MainGui:
 		self._screen = pygame.display.set_mode(self._size, pygame.SRCALPHA)
 		pygame.display.set_caption("Ares's Adventure")
 		pygame.display.set_icon(pygame.image.load("assets/icon/icon_1.png").convert())
+
+		self._game = Game(position=GAME_POSITION, size=GAME_SIZE, input_file=input_file)
 
 		self._start_button = PushButton(
 			position=(925, 50), size=(200, 40), button_id="start", text="Start",
@@ -40,7 +43,7 @@ class MainGui:
 			theme=BUTTON_THEME
 		)
 		self._execute_search_button = PushButton(
-			position=(945, 500), size=(160, 80), button_id="search",
+			position=(965, 540), size=(120, 60), button_id="search",
 			is_instant=False,
 			idle_img="assets/widgets/search.png",
 			disabled_img="assets/widgets/disabled_search.png",
@@ -54,14 +57,14 @@ class MainGui:
 		]
 
 		self._animation_speed_dropdown = Dropdown(
-			position=(900, 320), size=(250, 40), widget_id="select_animation_speed",
+			position=(900, 380), size=(250, 40), widget_id="select_animation_speed",
 			options=ANIMATION_SPEED_OPTIONS, options_display=3, option_size=(elements.AUTO_VALUE, 28),
 			theme=DROPDOWN_THEME
 		)
 		self._animation_speed_dropdown.select("Medium")
 
 		self._algorithm_dropdown = Dropdown(
-			position=(900, 440), size=(250, 40), widget_id="select_algorithm",
+			position=(900, 480), size=(250, 40), widget_id="select_algorithm",
 			options=ALGORITHM_OPTIONS, options_display=4, option_size=(elements.AUTO_VALUE, 28),
 			theme=DROPDOWN_THEME
 		)
@@ -73,16 +76,23 @@ class MainGui:
 		]
 		self._previous_dropdown = None
 
+		self._show_grids_switch = Switch(
+			position=(925 + 200 - 60, 280), size=(60, 40), widget_id="enable_grid", state=self._game.show_grids,
+		)
+
 		self._labels = {}
 		font = pygame.font.SysFont("Arial", 20, bold=True)
 		for i, text in enumerate(("Animation speed", "Algorithm")):
 			label = font.render(text, True, "#efefef")
-			label_position = (900 + (250 - label.get_width()) / 2, 320 + i * 120 - label.get_height() * 1.5)
+			label_position = (900 + (250 - label.get_width()) / 2, 380 + i * 100 - label.get_height() * 1.5)
 			self._labels.update({label: label_position})
 
-		self._pending_tasks = []
+		self._labels.update({
+			(label := font.render("Enable grids", True, "#efefef")):
+				(925 + (self._show_grids_switch.x - 925 - label.get_width()) / 2, 280 + (self._show_grids_switch.height - label.get_height()) / 2)
+		})
 
-		self._game = Game(position=GAME_POSITION, size=GAME_SIZE, input_file=input_file)
+		self._pending_tasks = []
 
 	def main_loop(self) -> None:
 		"""
@@ -116,6 +126,8 @@ class MainGui:
 
 		for dropdown in self._dropdowns:
 			dropdown.update(time_delta)
+
+		self._show_grids_switch.update(time_delta)
 
 		self._game.update(time_delta)
 		pygame.display.flip()
@@ -185,6 +197,9 @@ class MainGui:
 					case _:
 						pass
 				return True
+
+		if self._show_grids_switch.process_event(event):
+			self._game.show_grids = self._show_grids_switch.state
 		return False
 
 	def draw(self, surface: pygame.Surface) -> None:
@@ -210,6 +225,8 @@ class MainGui:
 			dropdown.draw(surface)
 		if active_dropdown is not None:
 			active_dropdown.draw(surface)
+
+		self._show_grids_switch.draw(surface)
 
 		self._game.draw(surface)
 		return None

@@ -46,12 +46,9 @@ class Game:
 		self._action = None
 		self._agent_position = None
 
-		self._calculate_tiles_resolution()
+		self.show_grids = False
 
-		# self._maze.search_and_write_output(DEFAULT_OUTPUT_FILE, Algorithm.DFS)
-		# self._maze.search_and_write_output(DEFAULT_OUTPUT_FILE, Algorithm.BFS)
-		# self._maze.search_and_write_output(DEFAULT_OUTPUT_FILE, Algorithm.UFC)
-		# self._maze.search_and_write_output(DEFAULT_OUTPUT_FILE, Algorithm.A_STAR)
+		self._calculate_tiles_resolution()
 
 	@property
 	def position(self) -> Tuple2Int:
@@ -262,15 +259,16 @@ class Game:
 		# Border
 		pygame.draw.rect(self._surface, "#000000", (0, 0, *self._size), width=1)
 		# Grid
-		grid_x = self._rect.left
-		while grid_x <= self._rect.right + 1:
-			pygame.draw.line(self._surface, "#c9c9c9", (grid_x, self._rect.top), (grid_x, self._rect.bottom))
-			grid_x += self._tile_size
+		if self.show_grids:
+			grid_x = self._rect.left
+			while grid_x <= self._rect.right + 1:
+				pygame.draw.line(self._surface, "#c9c9c9", (grid_x, self._rect.top), (grid_x, self._rect.bottom))
+				grid_x += self._tile_size
 
-		grid_y = self._rect.top
-		while grid_y <= self._rect.bottom + 1:
-			pygame.draw.line(self._surface, "#c9c9c9", (self._rect.left, grid_y), (self._rect.right, grid_y))
-			grid_y += self._tile_size
+			grid_y = self._rect.top
+			while grid_y <= self._rect.bottom + 1:
+				pygame.draw.line(self._surface, "#c9c9c9", (self._rect.left, grid_y), (self._rect.right, grid_y))
+				grid_y += self._tile_size
 		# Agent
 		self._surface.blit(self._agent_image, self._agent_image_position)
 		# Switch
